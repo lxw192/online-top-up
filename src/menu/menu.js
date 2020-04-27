@@ -1,13 +1,13 @@
 import React from 'react';
 import './menu.less'
-import { Layout, Menu, Breadcrumb, Icon, Carousel, Avatar, Badge, BackTop, Dropdown , Modal } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, Carousel, Avatar, Badge, BackTop, Dropdown, Modal } from 'antd';
 import { dispatch } from 'rxjs/internal/observable/pairs';
 import { connect } from 'react-redux'
-import { reduxForm, submit, getFormValues, Form , formValueSelector} from 'redux-form'
-import { getLoadInfo , updateInformation } from './../store/action/menu'
+import { reduxForm, submit, getFormValues, Form, formValueSelector } from 'redux-form'
+import { getLoadInfo, updateInformation } from './../store/action/menu'
 import MessageList from './MessageList'
 import InputField from '../components/InputField/InputField'
-import { required , number , mobile , password } from '../components/InputField/validate'
+import { required, number, mobile, password } from '../components/InputField/validate'
 import { getMd5Password } from '../util/util'
 import MaskProgress from '../components/MaskProgress/MaskProgress'
 const { Header, Content, Footer, Sider } = Layout;
@@ -19,35 +19,35 @@ class Menus extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
     let phone = window.sessionStorage.getItem('phone')
-    if(phone){
+    if (phone) {
       dispatch(getLoadInfo(phone))
-    }else{
+    } else {
       window.location.href = '/'
     }
-    
+
     console.log(this)
   }
   onCollapse = collapsed => {
     console.log(collapsed);
     this.setState({ collapsed });
   };
-  onClick=(type)=>{
-    const { dispatch ,  change , myValues , initialize , loginData } = this.props
-    switch(type){
+  onClick = (type) => {
+    const { dispatch, change, myValues, initialize, loginData } = this.props
+    switch (type) {
       case 'updatePassword':
         dispatch(initialize({
           ...loginData,
-          modalLock:true
+          modalLock: true
         }))
-          // change('modalLock' , true)
+        // change('modalLock' , true)
         break
       case 'updatePassword':
 
         break
       case 'logout':
-          window.sessionStorage.removeItem('user_id')
-          window.sessionStorage.removeItem('phone')
-          window.location.href = '/'
+        window.sessionStorage.removeItem('user_id')
+        window.sessionStorage.removeItem('phone')
+        window.location.href = '/'
         break
 
     }
@@ -56,10 +56,10 @@ class Menus extends React.Component {
     console.log({ item, key, keyPath, domEvent })
     switch (key) {
       case 'home':
-          window.location.href = '#/menu/home'
+        window.location.href = '#/menu/home'
         break;
       case 'home1':
-          window.location.href = '#/menu/home1'
+        window.location.href = '#/menu/home1'
         break;
 
     }
@@ -68,17 +68,17 @@ class Menus extends React.Component {
     const { change } = this.props;
     change('lock', true)
   }
-  handleOk=()=>{
-    const { dispatch , submit } = this.props;
+  handleOk = () => {
+    const { dispatch, submit } = this.props;
     dispatch(submit())
   }
-  onCancel=()=>{
+  onCancel = () => {
     const { change } = this.props;
     change('modalLock', false)
     change('menuModal', false)
   }
-  renderModal(){
-    const { modalLock , loginData , myValues } = this.props
+  renderModal() {
+    const { modalLock, loginData, myValues } = this.props
     console.log(myValues)
     return (
       <Modal title="修改密码" visible={modalLock} onOk={this.handleOk} onCancel={this.onCancel} cancelText='取消' okText='确认' >
@@ -88,7 +88,7 @@ class Menus extends React.Component {
       </Modal>
     )
   }
-  renderMenuModal(){
+  renderMenuModal() {
     const { menuModal } = this.props
     return (
       <Modal title="欢迎登陆" visible={menuModal} onCancel={this.onCancel} footer={null} >
@@ -102,7 +102,7 @@ class Menus extends React.Component {
     const menus = (
       <Menu>
         <Menu.Item>
-          <span onClick={this.onClick.bind(this , 'updatePassword')}>
+          <span onClick={this.onClick.bind(this, 'updatePassword')}>
             修改密码
           </span>
         </Menu.Item>
@@ -112,7 +112,7 @@ class Menus extends React.Component {
           </span>
         </Menu.Item>
         <Menu.Item>
-          <span onClick={ this.onClick.bind(this , 'logout') }>
+          <span onClick={this.onClick.bind(this, 'logout')}>
             退出登陆
           </span>
         </Menu.Item>
@@ -120,6 +120,25 @@ class Menus extends React.Component {
     )
     return (
       <div>
+        <div>
+          <div className={`Carousel_box`}>
+            <Carousel autoplay>
+              <div>
+                <h3><span style={{ cursor: 'pointer' }} onClick={this.onClick.bind(this, 'updatePassword')}>{loginData && loginData.name ? loginData.name : '默认名称'}</span></h3>
+              </div>
+              <div>
+                <h3>2</h3>
+              </div>
+            </Carousel>
+          </div>
+          <Dropdown overlay={menus} >
+            <div style={{ position: 'absolute', top: '14px', right: '30px', cursor: 'pointer' }} onClick={this.new_link} >
+              <Badge count={number ? number : ''} >
+                <Avatar shape="square" icon="user" />
+              </Badge>
+            </div>
+          </Dropdown>
+        </div>
         <Layout style={{ minHeight: '100vh' }}>
           <strong style={{ color: '#1088e9' }}></strong>
           <BackTop>
@@ -136,44 +155,10 @@ class Menus extends React.Component {
                 <Icon type="pie-chart" />
                 <span>Option 2</span>
               </Menu.Item>
-              <SubMenu key="sub1" title={
-                <span>
-                  <Icon type="mail" />
-                  <span>Navigation One</span>
-                </span>
-              }
-              >
-                <Menu.Item key="home1">Option 5</Menu.Item>
-              </SubMenu>
             </Menu>
           </Sider>
 
           <Layout>
-            <Header style={{ background: '#fff', padding: 0 }} >
-              <div className={`Carousel_box`}>
-                <Carousel autoplay>
-                  <div>
-                    <h3><span style={{cursor:'pointer'}} onClick={this.onClick.bind(this , 'updatePassword')}>{loginData && loginData.name ? loginData.name : '默认名称'}</span></h3>
-                  </div>
-                  <div>
-                    <h3>2</h3>
-                  </div>
-                  <div>
-                    <h3>3</h3>
-                  </div>
-                  <div>
-                    <h3>4</h3>
-                  </div>
-                </Carousel>
-              </div>
-              <Dropdown overlay={menus} >
-                <div style={{ position: 'absolute', top: '0px', right: '30px', cursor: 'pointer' }} onClick={this.new_link} >
-                  <Badge count={number ? number : ''} >
-                    <Avatar shape="square" icon="user" />
-                  </Badge>
-                </div>
-              </Dropdown>
-            </Header>
             <Content style={{ margin: '0 16px' }}>
               {this.props.children}
             </Content>
@@ -181,7 +166,7 @@ class Menus extends React.Component {
           </Layout>
         </Layout>
         {
-          myValues&&myValues.lock && <MessageList></MessageList>
+          myValues && myValues.lock && <MessageList></MessageList>
         }
         {
           this.renderModal()
@@ -214,8 +199,8 @@ const mapState = (state) => {
   return {
     number, loginData,
     myValues: getFormValues('menu')(state),
-    modalLock: selector(state , 'modalLock'),
-    menuModal: selector(state , 'menuModal'),
+    modalLock: selector(state, 'modalLock'),
+    menuModal: selector(state, 'menuModal'),
   }
 }
 
