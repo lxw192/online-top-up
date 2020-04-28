@@ -149,11 +149,11 @@ class Menus extends React.Component {
             <Menu theme="dark" defaultSelectedKeys={['1']} onClick={this.menu} mode="inline">
               <Menu.Item key="home">
                 <Icon type="pie-chart" />
-                <span>Option 1</span>
+                <span>首页</span>
               </Menu.Item>
               <Menu.Item key="home1">
                 <Icon type="pie-chart" />
-                <span>Option 2</span>
+                <span>个人信息</span>
               </Menu.Item>
             </Menu>
           </Sider>

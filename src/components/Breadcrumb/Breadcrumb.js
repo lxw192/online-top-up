@@ -14,7 +14,7 @@ export default class BreadcrumbComponent extends React.Component{
    return(
      <div className={'Breadcrumb_box'}>
        <Breadcrumb separator=">">
-         <Breadcrumb.Item>Home</Breadcrumb.Item>
+         <Breadcrumb.Item className='location'>当前位置</Breadcrumb.Item>
          {
            BreadcrumbData.map((item, index) => {
              console.log(item.link)

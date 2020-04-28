@@ -15,6 +15,7 @@ import { required, number, mobile, password } from '../components/InputField/val
 // import { UploadWrap } from '../components/Upload/UploadWrap'
 import UploadWrap from '../components/Upload/UploadWrap'
 import Breadcrumb from '../components/Breadcrumb/Breadcrumb'
+// import Haha from './haha'
 const formItemLayout = {
     labelCol: { span: 1 },
     wrapperCol: { span: 23 },
@@ -51,23 +52,46 @@ class Index1 extends React.Component {
         dispatch(get_house_list(parmas.join('')))
     }
    
-   
+    handleStart=()=>{
+        console.log('123')
+    }
+    handleDrag=()=>{
+        console.log('123')
+    }
+    handleStop=()=>{
+        console.log('123')
+    }
     render() {
         const { house_list } = this.props;
         return (
-            <div className={`housing_information`}>
+            <div className={`housing_information` , 'component_box'}>
                 <div>
                     <Breadcrumb BreadcrumbData={[
-                        {key:'haha' , link:'#/menu/home1' , islink:true},
-                        {key:'haha' , link:'#/menu/home1' , islink:true},
+                        {key:'个人信息' , link:'#/menu/home1' , islink:true},
                     ]}></Breadcrumb>
                 </div>
                 <SearchForm formName='home_form' enableKeys={['keysearch']} search={this.searchGrid} ref="home_ref">
-                    <div className={`search`}>
-                        
-                    </div>
                     <div className={`housing_information_list`}>
-                       
+                        <div style={{textAlign:'right'}}>
+                            <Button type='primary'>充值</Button>
+                        </div>
+                       <div>个人信息</div>
+                       <Row>
+                           <Col span={12}><InputField label={`账号`} validate={[required]} name='account' type='text' placeholder={'请输入账号'} /></Col>
+                           <Col span={12}><InputField label={`密码`} validate={[required]} name='cipher' type='password' placeholder={'请输入密码'} /></Col>
+                       </Row>
+                       <Row>
+                           <Col span={12}><InputField label={`地址`} validate={[required]} name='address' type='text' placeholder={'请输入地址'} /></Col>
+                           <Col span={12}><InputField label={`门牌号`} validate={[required]} name='street_number' type='text' placeholder={'请输入门牌号'} /></Col>
+                       </Row>
+                       <Row>
+                           <Col span={12}><InputField label={`手机号`} validate={[required]} name='mobile' type='text' placeholder={'请输入手机号'} /></Col>
+                           <Col span={12}><InputField label={`充值时间`} validate={[required]} name='name' type='text' placeholder={'请输入充值时间'} /></Col>
+                       </Row>
+                       <Row>
+                           <Col span={12}><InputField label={`上网账号`} validate={[required]} name='name' type='text' placeholder={'请输入上网账号'} /></Col>
+                           <Col span={12}><InputField label={`剩余时间`} validate={[required]} name='name' type='text' placeholder={'请输入剩余时间'} /></Col>
+                       </Row>
                     </div>
                 </SearchForm>
             </div >
