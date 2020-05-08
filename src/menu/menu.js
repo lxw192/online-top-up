@@ -24,21 +24,16 @@ class Menus extends React.Component {
     } else {
       window.location.href = '/'
     }
-
-    console.log(this)
   }
   onCollapse = collapsed => {
-    console.log(collapsed);
     this.setState({ collapsed });
   };
   selectedKeys=()=>{
     const { location = {} } = this.props;
     const { pathname = '' } = location;
-    console.warn( pathname )
     let selectedKeys = [];
 		if (pathname) {
       const path = pathname.substring(6);
-      console.warn(`path.split('/')` ,path.split('/') , path )
 			selectedKeys = path.split('/');
 		}
 		return [selectedKeys[0]]
@@ -65,16 +60,7 @@ class Menus extends React.Component {
     }
   }
   menu = ({ item, key, keyPath, domEvent }) => {
-    console.log('item', item, 'key', key, 'keyPath', keyPath, 'domEvent', domEvent)
-    switch (key) {
-      case 'home':
-        window.location.href = '#/menu/home'
-        break;
-      case 'home1':
-        window.location.href = '#/menu/home1'
-        break;
-
-    }
+    window.location.href = `#/menu/${key}`
   }
   new_link = () => {
     const { change } = this.props;
@@ -113,7 +99,6 @@ class Menus extends React.Component {
 
   render() {
     const { loginData, number = 0, myValues } = this.props;
-    console.log(loginData)
     const menus = (
       <Menu>
         <Menu.Item>
@@ -161,20 +146,24 @@ class Menus extends React.Component {
           </BackTop>
           <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
             <div className="logo" />
-            <Menu theme="dark" defaultSelectedKeys={['home']} selectedKeys={this.selectedKeys()} openKeys={['home1']} onClick={this.menu} mode="inline">
+            <Menu theme="dark" defaultSelectedKeys={['home']} selectedKeys={this.selectedKeys()} openKeys={['sub1']} onClick={this.menu} mode="inline">
               <Menu.Item key="home">
                 <Icon type="pie-chart" />
                 <span>首页</span>
               </Menu.Item>
-              <Menu.Item key="home1">
+              <Menu.Item key="personal_details">
                 <Icon type="pie-chart" />
                 <span>个人信息</span>
               </Menu.Item>
-              <SubMenu key="sub1" title="Navigation One">
-                <Menu.Item key="5">Option 5</Menu.Item>
-                <Menu.Item key="6">Option 6</Menu.Item>
-                <Menu.Item key="7">Option 7</Menu.Item>
-                <Menu.Item key="8">Option 8</Menu.Item>
+              <SubMenu key="sub1" title="用户账单">
+                <Menu.Item key="home12">用户账单</Menu.Item>
+              </SubMenu>
+              <SubMenu key="sub2" title="业务办理">
+                <Menu.Item key="home2123">业务办理</Menu.Item>
+              </SubMenu>
+              <SubMenu key="sub3" title="账户管理">
+                <Menu.Item key="home2">修改密码</Menu.Item>
+                <Menu.Item key="home22">突出登录</Menu.Item>
               </SubMenu>
             </Menu>
           </Sider>
