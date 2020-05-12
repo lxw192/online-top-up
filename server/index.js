@@ -8,9 +8,11 @@ var fs = require("fs");
 const DB_URL = 'mongodb://127.0.0.1:27017/haha'
 var bodyParser = require('body-parser');
 
+
+let personal = require('./personal')
 // const uploadImg = require('./img')
 // 连接数据库
-mongoose.connect(DB_URL, { useNewUrlParser: true })
+mongoose.connect(DB_URL, { useNewUrlParser: true ,useUnifiedTopology:true })
 //用户表
 const User = mongoose.model('user', new mongoose.Schema({
     phone: { type: String, required: true },
@@ -49,7 +51,7 @@ const app = express()
 app.use(express.static(path.join(__dirname, '/../src/static')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-
+app.use('/',personal);
 async function getPostData(req) {
     let postData = '';
     await req.on('data', function (postDataChunk) {
@@ -66,8 +68,6 @@ var upload = multer({ dest: path.join(__dirname, '/../src/static/house_img/') })
 app.post('/uploader', upload.single('avatar'), function (req, res, next) {
     console.log(req.file)
     const newname = req.file.path + path.parse(req.file.originalname).ext
-    // const newname=req.file.destination+req.file.originalname
-    // const newname=req.file.destination+new Date().getTime() + path.parse(req.file.originalname).ext
     fs.rename(req.file.path, newname, function (err) {
         if (err) {
             res.send({ code: 400, message: '上传失败' })
@@ -244,10 +244,41 @@ app.post('/house_list/creat', (req, res) => {
     })
 })
 
+//==================个人信息开始===========================================================
+
+// app.get('/personal_details', (req, res) => {
+//     console.log(req.body , req.header , req.headers)
+//     // House_list.create(req.body, (err , doc)=>{
+//     //     console.log(err , doc)
+//     //     if(!err){
+//     //         res.send({code:200,message:'添加成功'})
+//     //     }
+//     // })
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//================个人信息结束=============================================================
 
 //监听事件 及 监听端口
-app.listen(8001, (err) => {
+app.listen(8888, (err) => {
     if (!err) {
-        console.info('listen to 8001')
+        console.info('listen to 8888')
     }
 })

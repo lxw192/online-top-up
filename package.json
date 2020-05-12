@@ -16,11 +16,13 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-react-app": "^9.0.0",
     "camelcase": "^5.2.0",
+    "captcha-mini": "^1.1.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "classnames": "^2.2.6",
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
+    "es6-promise": "^4.2.8",
     "eslint": "^5.16.0",
     "eslint-config-react-app": "^4.0.1",
     "eslint-loader": "2.1.2",
@@ -158,5 +160,5 @@
       "react-app"
     ]
   },
-  "proxy": "http://localhost:8001"
+  "proxy": "http://localhost:8888"
 }
