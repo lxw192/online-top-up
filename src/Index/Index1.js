@@ -10,7 +10,7 @@ import SearchForm from '../components/SearchForm/SearchForm'
 import { Tabs, Button, Icon, Col, Row, Modal ,Table,notification } from 'antd';
 import { connect } from 'react-redux'
 import $ from 'jquery'
-import { get_personal_details , validate_password  , getPasswordList } from './../store/action/personal'
+import { get_personal_details , validate_password  , getPasswordList , clearValidate_password } from './../store/action/personal'
 import { required, number, mobile, password } from '../components/InputField/validate'
 // import { UploadWrap } from '../components/Upload/UploadWrap'
 import UploadWrap from '../components/Upload/UploadWrap'
@@ -58,10 +58,6 @@ class Index1 extends React.Component {
     handleStop=()=>{
         console.log('123')
     }
-    handleOk = () => {
-        const { change } = this.props
-        change('modalLock', false)
-    }
     onCancel = () => {
         const { change } = this.props
         change('modalLock', false)
@@ -83,29 +79,40 @@ class Index1 extends React.Component {
         }
 
     }
+    clearValidate_password=(type)=>{
+        const { dispatch } = this.props
+        if(type == 'add'){
+            dispatch(addTimeOnline)
+        }else{
+            dispatch(clearValidate_password())
+        }
+    }
     renderModal() {
-        const { modalLock , data=[{id:1231 , refill_card:'1231' ,refill_password:'123123123132',face_value:'123111' }]} = this.props
+        const { modalLock , data=[{id:1231 , refill_card:'1231' ,refill_password:'123123123132',face_value:'123111' }] , validate_password=[] } = this.props
         let columns = [
-            {title:'充值卡' , dataIndex:'refill_card' , key:'refill_card'},
-            {title:'密码' , dataIndex:'refill_password' , key:'refill_password'},
+            {title:'充值卡' , dataIndex:'card_number' , key:'card_number'},
+            {title:'密码' , dataIndex:'pass_word' , key:'pass_word'},
             {title:'面值' , dataIndex:'face_value' , key:'face_value'},
             {
                 title: '操作', dataIndex: 'action', key: 'action',
                 render: (t , r) => {
                     return (
-                        <a>充值</a>
+                        <div>
+                            <a style={{marginRight:'10px'}} onClick={this.clearValidate_password.bind(this , 'add')}>充值</a>
+                            <a style={{color:'red'}} onClick={this.clearValidate_password.bind(this , 'del')}>删除</a>
+                        </div>
                     )
                 }
             },
         ]
         return (
-            <Modal title="充值卡充值" visible={modalLock} onOk={this.handleOk} onCancel={this.onCancel} cancelText='取消' okText='确认' >
+            <Modal title="充值卡充值" visible={modalLock} width={632} onCancel={this.onCancel} footer={[]}>
                 <div className={'modal_box'}>
-                    <p>提示：一次最多使用一张充值卡充值，您的余额是<span>1</span>元。本次续订套餐总月数是<span>1</span>月，共支付<span>1</span>元</p>
-                    <InputField label={`密码`} validate={[required]} name='password' type='text' placeholder={'请输入密码'} />
-                    <a href={'javascript:;'} onClick={this.addPassword}>添加</a>
-                    <p>已添加的充值卡</p>
-                    <Table columns={columns} dataSource={data} />
+        <p className={'prompt_copywriter'}>提示：一次最多使用一张充值卡充值，您的余额是<span className={'red'}>0</span>元。本次续订套餐总月数是<span className={'red'}>{validate_password.length > 0 ? 1 : 0}</span>月，共支付<span className={'red'}>{validate_password.length > 0 ? validate_password[0].face_value :0}</span>元</p>
+                    <InputField label={`密码`} name='password' type='text' placeholder={'请输入密码'} />
+                    <a href={'javascript:;'} style={{marginLeft:'30px'}} onClick={this.addPassword}>添加</a>
+                    <p className='location'>已添加的充值卡</p>
+                    <Table rowKey={'id'} columns={columns} dataSource={validate_password} />
                 </div>
             </Modal>
         )
@@ -124,7 +131,7 @@ class Index1 extends React.Component {
                         <div style={{textAlign:'right'}}>
                             <Button type='primary' onClick={this.showModal}>充值</Button>
                         </div>
-                       <div>个人信息</div>
+                       {/* <div>个人信息</div> */}
                        <Row>
                            <Col span={12}><InputField disabled={true} label={`账号`} validate={[required]} name='account' type='text' placeholder={'请输入账号'} /></Col>
                            {/* <Col span={12}><InputField label={`密码`} validate={[required]} name='cipher' type='password' placeholder={'请输入密码'} /></Col> */}
@@ -172,7 +179,11 @@ Index1 = reduxForm({
 })(Index1)
 
 const mapState = (state) => {
+    const {
+        personal:{ validate_password }
+    } = state
     return {
+        validate_password,
         modalLock:selector(state , 'modalLock'),
         allvalues:getFormValues('personal_details')(state),
     }

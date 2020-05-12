@@ -24,14 +24,27 @@ export function validate_password(values){
                     icon: <img src='./img/错误icon.png'/> ,
                   });
             }else{
+                console.log(data)
                 notification.open({
                     message: '提示',
-                    description: '成功',
+                    description: '添加成功',
                     icon: <img src='./img/suc.png'/> ,
                   });
-                
+                  dispatch(change('personal_details' , 'password' , ''))
+                dispatch({
+                    type: types.VALIDATE_PASSWORD,
+                    validate_password: data.items
+                })
             }
             return data
+        })
+    }
+}
+export function clearValidate_password(values) {
+    return dispatch => {
+        dispatch({
+            type: types.VALIDATE_PASSWORD,
+            validate_password: []
         })
     }
 }

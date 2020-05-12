@@ -27,7 +27,7 @@ module.exports = (
   router.post('/validate_password', (req, res) => {
     validate_password.findOne({'pass_word' : req.body.pass_word }, (err , data)=>{
       if (data) {
-        res.send({ code: 200, ...data._doc })
+        res.send({ code: 200, items:[data._doc] })
     } else {
         res.send({ code: 400, 'message': '密码不正确' })
     }
