@@ -48,3 +48,30 @@ export function clearValidate_password(values) {
         })
     }
 }
+export function addTimeOnline(values){
+    return dispatch =>{
+        console.log('=============>>>>>>>>>>>>>> ' , values )
+        return axios.put('/validate_password/add' , values ).then(data => {
+            if(data.code>=300){
+                notification.open({
+                    message: '提示',
+                    description: data.message,
+                    icon: <img src='./img/错误icon.png'/> ,
+                  });
+            }else{
+                console.log(data)
+                notification.open({
+                    message: '提示',
+                    description: '添加成功',
+                    icon: <img src='./img/suc.png'/> ,
+                  });
+                  dispatch(change('personal_details' , 'password' , ''))
+                dispatch({
+                    type: types.VALIDATE_PASSWORD,
+                    validate_password: data.items
+                })
+            }
+            return data
+        })
+    }
+}

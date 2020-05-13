@@ -10,7 +10,7 @@ import SearchForm from '../components/SearchForm/SearchForm'
 import { Tabs, Button, Icon, Col, Row, Modal ,Table,notification } from 'antd';
 import { connect } from 'react-redux'
 import $ from 'jquery'
-import { get_personal_details , validate_password  , getPasswordList , clearValidate_password } from './../store/action/personal'
+import { get_personal_details , validate_password  , getPasswordList , clearValidate_password , addTimeOnline } from './../store/action/personal'
 import { required, number, mobile, password } from '../components/InputField/validate'
 // import { UploadWrap } from '../components/Upload/UploadWrap'
 import UploadWrap from '../components/Upload/UploadWrap'
@@ -80,15 +80,15 @@ class Index1 extends React.Component {
 
     }
     clearValidate_password=(type)=>{
-        const { dispatch } = this.props
+        const { dispatch , validate_password=[] } = this.props
         if(type == 'add'){
-            dispatch(addTimeOnline)
+            dispatch(addTimeOnline(validate_password[0]))
         }else{
             dispatch(clearValidate_password())
         }
     }
     renderModal() {
-        const { modalLock , data=[{id:1231 , refill_card:'1231' ,refill_password:'123123123132',face_value:'123111' }] , validate_password=[] } = this.props
+        const { modalLock , validate_password=[] } = this.props
         let columns = [
             {title:'充值卡' , dataIndex:'card_number' , key:'card_number'},
             {title:'密码' , dataIndex:'pass_word' , key:'pass_word'},

@@ -9,7 +9,6 @@ axios.defaults.headers = {
   'timeout':1000 * 100
 }
 const get = (url, params)=>{
-  console.log(url)
     return new Promise((resolve, reject) => {
         axios.get(url, {
             params: params
@@ -23,9 +22,22 @@ const get = (url, params)=>{
     });
 }
 const post = (url, params) => {
-  console.log(url , params)
+  console.log(params)
   return new Promise((resolve, reject) => {
     axios.post(url, {
+      ...params
+    })
+      .then(res => {
+        return resolve(res.data);
+      })
+      .catch(err => {
+        return reject(err.data)
+      })
+  });
+}
+const put = (url, params) => {
+  return new Promise((resolve, reject) => {
+    axios.put(url, {
       ...params
     })
       .then(res => {
@@ -39,4 +51,5 @@ const post = (url, params) => {
 export default {
   get,
   post,
+  put,
 }
