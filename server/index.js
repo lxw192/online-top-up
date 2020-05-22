@@ -5,7 +5,7 @@ var multer = require('multer');
 var path = require("path")
 var url = require('url')
 var fs = require("fs");
-const DB_URL = 'mongodb://127.0.0.1:27017/haha'
+const DB_URL = 'mongodb://127.0.0.1:27017/online_top_up'
 var bodyParser = require('body-parser');
 
 
@@ -243,42 +243,9 @@ app.post('/house_list/creat', (req, res) => {
         }
     })
 })
-
-//==================个人信息开始===========================================================
-
-// app.get('/personal_details', (req, res) => {
-//     console.log(req.body , req.header , req.headers)
-//     // House_list.create(req.body, (err , doc)=>{
-//     //     console.log(err , doc)
-//     //     if(!err){
-//     //         res.send({code:200,message:'添加成功'})
-//     //     }
-//     // })
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//================个人信息结束=============================================================
-
 //监听事件 及 监听端口
-app.listen(8888, (err) => {
+app.listen(8001, (err) => {
     if (!err) {
-        console.info('listen to 8888')
+        console.info('listen to 8001')
     }
 })
