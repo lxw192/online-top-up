@@ -244,8 +244,8 @@ app.post('/house_list/creat', (req, res) => {
     })
 })
 //监听事件 及 监听端口
-app.listen(8001, (err) => {
+app.listen(8008, (err) => {
     if (!err) {
-        console.info('listen to 8001')
+        console.info('listen to 8008')
     }
 })
