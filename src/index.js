@@ -7,6 +7,8 @@ import Menu from './menu/menu';
 import Index from './Index/Index';
 import Index1 from './Index/Index1';
 import Index2 from './Index/Index2';
+import Bill from './Index/Bill';
+import Change_password from './Index/ChangePassword';
 import thunk from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -38,6 +40,8 @@ ReactDOM.render(
                 <Menu path="/menu" component={Menu} >
                     <Route path="/menu/home" component={Index} ></Route>
                     <Route path="/menu/personal_details" component={Index1} ></Route>
+                    <Route path="/menu/bill" component={Bill} ></Route>
+                    <Route path="/menu/change_password" component={Change_password} ></Route>
                     <Route path="/menu/home2" component={Index2} ></Route>
                 </Menu>
                 {/* <Route path="/menu/home" component={Index} ></Route>
