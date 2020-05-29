@@ -151,11 +151,12 @@ class Index1 extends React.Component {
         const { home_ref } = this.refs
         home_ref.searchGrid()
     }
-    
+
     addHouse = () => {
         const { change } = this.props
         change("modalLock", true)
     }
+    
     handleCancel = () => {
         const { change } = this.props
         change("modalLock", false)
