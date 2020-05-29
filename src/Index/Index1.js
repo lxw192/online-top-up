@@ -156,11 +156,12 @@ class Index1 extends React.Component {
         const { change } = this.props
         change("modalLock", true)
     }
-    
+
     handleCancel = () => {
         const { change } = this.props
         change("modalLock", false)
     }
+    
     handleOk = () => {
         console.log("11111111111111111")
         const { dispatch , submit } = this.props
